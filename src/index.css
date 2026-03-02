@@ -473,3 +473,46 @@ button:hover{
   background:#00ff9c;
   color:black;
 }
+
+
+
+.scroll-btn{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  padding:12px 16px;
+  font-size:20px;
+  background:#00ff9c;
+  color:black;
+  border:none;
+  border-radius:50%;
+  cursor:pointer;
+  box-shadow:0 0 15px #00ff9c;
+  z-index:1000;
+  transition:0.3s;
+}
+
+.scroll-btn:hover{
+  transform:scale(1.1);
+}
+
+
+/* Hide scrollbar for Chrome, Edge, Safari */
+
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 1px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #00ff9c;
+  border-radius: 10px;
+}

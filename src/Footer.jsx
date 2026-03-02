@@ -11,9 +11,9 @@ function Footer(){
 
         <div className="footer-center">
           <h3>Connect With Me</h3>
-          <p>Email: prajakta@example.com</p>
+          <p>Email: prajaktagavhane372@gmail.com</p>
           <p>GitHub: github.com/prajakta372</p>
-          <p>LinkedIn: linkedin.com/in/yourprofile</p>
+          <p>LinkedIn: https://www.linkedin.com/in/prajakta-gavhane-6b145a25a</p>
         </div>
 
         <div className="footer-right">

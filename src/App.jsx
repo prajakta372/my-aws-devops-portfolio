@@ -5,6 +5,7 @@ import Skills from "./Skills"
 import Projects from "./Projects"
 import GitHub from "./GitHub"
 import Architecture from "./Architecture"
+import ScrollTop from "./ScrollTop"
 import Footer from "./Footer";
 
 function App(){
@@ -16,9 +17,13 @@ function App(){
       <Projects/>
       <GitHub/>
       <Architecture/>
+      <ScrollTop/>
       <Footer/>
     </>
   );
 }
 
 export default App
+
+
+
