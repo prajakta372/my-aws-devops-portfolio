@@ -1,3 +1,6 @@
+
+https://prajakta372.github.io/my-aws-devops-portfolio/
+
 # 🚀 AWS DevOps Portfolio - Prajakta
 
 This is my personal portfolio built using React and focused on AWS & DevOps skills.
