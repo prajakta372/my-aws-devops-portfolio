@@ -17,7 +17,7 @@ Aspiring AWS & DevOps Engineer with knowledge of:
 - DevOps Practice Projects
 
 ## 🌐 Tech Stack
-React, JavaScript, HTML, CSS, AWS, Linux, Git
+React, JavaScript, HTML, CSS, AWS, Linux, Git, Github, Docker
 
 ## 📌 Goal
 Seeking entry-level AWS/DevOps or Cloud role where I can learn and contribute.
