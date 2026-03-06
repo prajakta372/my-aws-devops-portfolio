@@ -36,9 +36,9 @@ const scrollToProjects = () => {
     }
   },[charIndex,index])
 
-  const downloadResume = () => {
-  window.open("/my-aws-devops-portfolio/Prajakta_Gavhane_Resume.pdf");
-};
+//   const downloadResume = () => {
+//   window.open("/my-aws-devops-portfolio/Prajakta_Gavhane_Resume.pdf");
+// };
 
   return(
    <section id="home" className="hero">
