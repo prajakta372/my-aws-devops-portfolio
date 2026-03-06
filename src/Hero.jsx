@@ -36,6 +36,10 @@ const scrollToProjects = () => {
     }
   },[charIndex,index])
 
+  const downloadResume = () => {
+  window.open("/my-aws-devops-portfolio/Prajakta_Gavhane_Resume.pdf");
+};
+
   return(
    <section id="home" className="hero">
       <h1>Hi, I'm Prajakta 👋</h1>
@@ -50,8 +54,13 @@ const scrollToProjects = () => {
  <button className="primary-btn" onClick={scrollToProjects}>
   View My Projects
 </button>
-  <a href="/public/Prajakta_Gavhane_Resume.pdf" download>
-  <button className="secondary-btn" >Download Resume</button>
+  <a
+  href="/my-aws-devops-portfolio/Prajakta_Gavhane_Resume.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="secondary-btn"
+>
+  📄 View Resume
 </a>
 </div>
 
