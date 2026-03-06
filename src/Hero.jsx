@@ -55,12 +55,11 @@ const scrollToProjects = () => {
   View My Projects
 </button>
   <a
-  href="/my-aws-devops-portfolio/Prajakta_Gavhane_Resume.pdf"
-  target="_blank"
-  rel="noopener noreferrer"
+  href={`${import.meta.env.BASE_URL}Prajakta_Gavhane_Resume.pdf`}
+  download
   className="secondary-btn"
 >
-  📄 View Resume
+  Download Resume
 </a>
 </div>
 
