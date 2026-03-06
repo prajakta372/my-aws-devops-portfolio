@@ -325,13 +325,13 @@ button:hover{
 
 /* resume button */
 .secondary-btn{
+  margin-top: 20px;
   background:transparent;
   color:#00ff9c;
   border:1px solid #00ff9c;
   padding:12px 22px;
   font-size:16px;
   border-radius:6px;
-  margin top: 10px;
   cursor:pointer;
   transition:0.3s;
 }
