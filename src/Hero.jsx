@@ -50,8 +50,8 @@ const scrollToProjects = () => {
  <button className="primary-btn" onClick={scrollToProjects}>
   View My Projects
 </button>
-  <a href="/Prajakta_Gavhane_Resume.pdf" download>
-  <button className="secondary-btn">Download Resume</button>
+  <a href="/public/Prajakta_Gavhane_Resume.pdf" download>
+  <button className="secondary-btn" >Download Resume</button>
 </a>
 </div>
 
