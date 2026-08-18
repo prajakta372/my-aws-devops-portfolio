@@ -1,4 +1,4 @@
-import resumeUrl from "./assets/Prajakta_Gavhane_Resume.pdf";
+import resumeUrl from "./assets/Gavhane_Prajakta_resume_new.pdf";
 
 function FloatingResume() {
   return (
