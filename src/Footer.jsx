@@ -24,7 +24,7 @@ function Footer() {
                   <span className="brand-prefix">&gt;</span> Prajakta Gavhane
                 </div>
                 <p className="footer-bio">
-                  AWS Certified Solutions Architect – Associate with expertise in Linux, AWS Cloud, 
+                  AWS Certified Solutions Architect – Associate with expertise in Linux, AWS Cloud,
                   Docker, Kubernetes, CI/CD automation, DevSecOps, and observability.
                 </p>
                 <div className="footer-availability">
@@ -61,9 +61,9 @@ function Footer() {
                 <ul className="footer-contact-list">
                   <li>
                     <span className="contact-icon">💼</span>
-                    <a 
-                      href="https://www.linkedin.com/in/prajakta-gavhane-6b145a25a" 
-                      target="_blank" 
+                    <a
+                      href="https://www.linkedin.com/in/prajakta-gavhane-6b145a25a"
+                      target="_blank"
                       rel="noreferrer"
                       className="contact-link"
                     >
@@ -72,9 +72,9 @@ function Footer() {
                   </li>
                   <li>
                     <span className="contact-icon">🐙</span>
-                    <a 
-                      href="https://github.com/prajakta372" 
-                      target="_blank" 
+                    <a
+                      href="https://github.com/prajakta372"
+                      target="_blank"
                       rel="noreferrer"
                       className="contact-link"
                     >
@@ -83,9 +83,9 @@ function Footer() {
                   </li>
                   <li>
                     <span className="contact-icon">☁️</span>
-                    <a 
-                      href="https://www.credly.com/badges/fc939891-f9f3-462c-b501-b829cf56cb70" 
-                      target="_blank" 
+                    <a
+                      href="https://www.credly.com/badges/fc939891-f9f3-462c-b501-b829cf56cb70"
+                      target="_blank"
                       rel="noreferrer"
                       className="contact-link"
                     >
@@ -94,8 +94,8 @@ function Footer() {
                   </li>
                   <li>
                     <span className="contact-icon">📄</span>
-                    <a 
-                      href="/Prajakta_Gavhane_Resume.pdf" 
+                    <a
+                      href="/Prajakta_Gavhane_Resume.pdf"
                       download="Prajakta_Gavhane_Resume.pdf"
                       className="contact-link text-green"
                     >
