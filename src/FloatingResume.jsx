@@ -5,7 +5,7 @@ function FloatingResume() {
     <aside className="floating-resume-wrapper" aria-label="Quick Resume Download">
       <a
         href={resumeUrl}
-        download="Prajakta_Gavhane_Resume.pdf"
+        download="Gavhane_Prajakta_resume_new.pdf"
         className="floating-resume-btn"
         title="Download Prajakta's Resume (PDF)"
         aria-label="Download Prajakta's Resume PDF"

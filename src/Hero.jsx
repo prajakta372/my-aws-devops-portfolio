@@ -118,7 +118,7 @@ function Hero() {
 
               <a 
                 href={resumeUrl} 
-                download="Prajakta_Gavhane_Resume.pdf"
+                download="Gavhane_Prajakta_resume_new.pdf"
                 className="btn btn-secondary"
               >
                 <span className="btn-icon">📄</span> [ download_resume.pdf ]

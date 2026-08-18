@@ -98,7 +98,7 @@ function Footer() {
                     <span className="contact-icon">📄</span>
                     <a
                       href={resumeUrl}
-                      download="Prajakta_Gavhane_Resume.pdf"
+                      download="Gavhane_Prajakta_resume_new.pdf"
                       className="contact-link text-green"
                     >
                       [ Download Prajakta's Resume PDF ]
