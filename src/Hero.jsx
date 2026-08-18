@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import resumeUrl from "./assets/Prajakta_Gavhane_Resume.pdf";
 
 function Hero() {
   const scrollTo = (id) => {
@@ -116,8 +117,8 @@ function Hero() {
               </button>
 
               <a 
-                href={`${import.meta.env.BASE_URL}Gavhane_Prajakta_resume_new.pdf`} 
-                download="Gavhane_Prajakta_resume_new.pdf"
+                href={resumeUrl} 
+                download="Prajakta_Gavhane_Resume.pdf"
                 className="btn btn-secondary"
               >
                 <span className="btn-icon">📄</span> [ download_resume.pdf ]

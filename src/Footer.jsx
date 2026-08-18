@@ -1,3 +1,5 @@
+import resumeUrl from "./assets/Prajakta_Gavhane_Resume.pdf";
+
 function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -95,8 +97,8 @@ function Footer() {
                   <li>
                     <span className="contact-icon">📄</span>
                     <a
-                      href={`${import.meta.env.BASE_URL}Gavhane_Prajakta_resume_new.pdf`}
-                      download="Gavhane_Prajakta_resume_new.pdf"
+                      href={resumeUrl}
+                      download="Prajakta_Gavhane_Resume.pdf"
                       className="contact-link text-green"
                     >
                       [ Download Prajakta's Resume PDF ]
