@@ -116,8 +116,8 @@ function Hero() {
               </button>
 
               <a 
-                href="/Prajakta_Gavhane_Resume.pdf" 
-                download="Prajakta_Gavhane_Resume.pdf"
+                href={`${import.meta.env.BASE_URL}Gavhane_Prajakta_resume_new.pdf`} 
+                download="Gavhane_Prajakta_resume_new.pdf"
                 className="btn btn-secondary"
               >
                 <span className="btn-icon">📄</span> [ download_resume.pdf ]

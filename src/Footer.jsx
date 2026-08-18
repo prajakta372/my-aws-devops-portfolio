@@ -95,8 +95,8 @@ function Footer() {
                   <li>
                     <span className="contact-icon">📄</span>
                     <a
-                      href="/Prajakta_Gavhane_Resume.pdf"
-                      download="Prajakta_Gavhane_Resume.pdf"
+                      href={`${import.meta.env.BASE_URL}Gavhane_Prajakta_resume_new.pdf`}
+                      download="Gavhane_Prajakta_resume_new.pdf"
                       className="contact-link text-green"
                     >
                       [ Download Prajakta's Resume PDF ]

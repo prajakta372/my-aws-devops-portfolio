@@ -1,9 +1,11 @@
 function FloatingResume() {
+  const resumeUrl = `${import.meta.env.BASE_URL}Gavhane_Prajakta_resume_new.pdf`;
+
   return (
     <aside className="floating-resume-wrapper" aria-label="Quick Resume Download">
       <a
-        href="/Prajakta_Gavhane_Resume.pdf"
-        download="Prajakta_Gavhane_Resume.pdf"
+        href={resumeUrl}
+        download="Gavhane_Prajakta_resume_new.pdf"
         className="floating-resume-btn"
         title="Download Prajakta's Resume (PDF)"
         aria-label="Download Prajakta's Resume PDF"
