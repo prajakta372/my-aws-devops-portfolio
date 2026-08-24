@@ -1,4 +1,4 @@
-import resumeUrl from "./assets/Gavhane_Prajakta_resume_new.pdf";
+import resumeUrl from "./Gavhane_Prajakta_resume_new.pdf";
 
 function Footer() {
   const currentYear = new Date().getFullYear();

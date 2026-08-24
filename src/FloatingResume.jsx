@@ -1,11 +1,11 @@
-import resumeUrl from "./assets/Gavhane_Prajakta_resume_new.pdf";
+import resumeUrl from "./Gavhane_Prajakta_resume_new.pdf";
 
 function FloatingResume() {
   return (
     <aside className="floating-resume-wrapper" aria-label="Quick Resume Download">
       <a
         href={resumeUrl}
-        download="/src/Gavhane_Prajakta_resume_new.pdf"
+        download="Gavhane_Prajakta_resume_new.pdf"
         className="floating-resume-btn"
         title="Download Prajakta's Resume (PDF)"
         aria-label="Download Prajakta's Resume PDF"
