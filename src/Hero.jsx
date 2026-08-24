@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import resumeUrl from "./assets/Gavhane_Prajakta_resume_new.pdf";
+import resumeUrl from "/src/Gavhane_Prajakta_resume_new.pdf";
 
 function Hero() {
   const scrollTo = (id) => {
