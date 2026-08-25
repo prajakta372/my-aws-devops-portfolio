@@ -1,151 +1,222 @@
-# 🚀 My AWS DevOps Portfolio & Deployment Projects
+# Task Manager -- DevSecOps CI/CD & Kubernetes Monitoring
 
-**Live Portfolio Website:** [https://prajakta372.github.io/my-aws-devops-portfolio/](https://prajakta372.github.io/my-aws-devops-portfolio/)
-
----
-
-# Project Overview
-
-This project is a comprehensive DevOps and Cloud Engineering portfolio showcasing end-to-end infrastructure provisioning, containerization, Kubernetes orchestration, CI/CD pipeline automation, and monitoring observability.
-
-The main purpose of this project was to explore different deployment and DevOps approaches using AWS, Docker, Kubernetes, Jenkins, Prometheus, Grafana, and Linux.
+A production-style DevOps project that demonstrates containerization, CI/CD automation, Kubernetes deployment, infrastructure monitoring, and application observability using AWS, Docker, Jenkins, K3s, Prometheus, and Grafana.
 
 ---
 
-# Features
+## Project Overview
 
-* AWS Cloud Infrastructure Setup (EC2 & S3)
-* Multi-stage Docker Containerization
-* Kubernetes (K3s) Cluster & Declarative Manifest Deployment
-* Continuous Integration & Deployment via Jenkins CI/CD Pipeline
-* Full-stack Task Manager Application Deployment
-* Real-time Observability & Monitoring with Prometheus & Grafana
+This project takes a Task Manager web application through an automated DevOps workflow:
 
----
+**GitHub → Jenkins → Docker Build → Docker Hub → Kubernetes/K3s → Prometheus → Grafana**
 
-# Technologies Used
-
-## Frontend & Web Application
-* React.js / Vite
-* JavaScript (ES6+)
-* HTML5 / CSS3
-
-## Cloud & DevOps Tools
-* **Cloud Infrastructure**: AWS EC2, AWS S3, AWS IAM, VPC, CloudWatch
-* **Containerization**: Docker, Multi-stage Builds, Docker Compose
-* **Orchestration**: Kubernetes (K3s), kubectl, Ingress Controllers, Services, Deployments
-* **CI/CD Automation**: Jenkins, Declarative Jenkinsfile, GitHub Hooks
-* **Monitoring & Observability**: Prometheus, Grafana, Node Exporter
-* **Operating System**: Linux (Ubuntu), SSH, Bash Scripting
+The goal is to demonstrate practical DevOps skills including Linux administration, Docker, CI/CD, Kubernetes, cloud infrastructure, monitoring, troubleshooting, and secure credential handling.
 
 ---
 
-# Approach 1 — AWS Cloud & Linux Server Setup
+## Architecture
 
-## Purpose
-Provision secure cloud compute on AWS EC2 and configure Linux remote administration via SSH.
+```text
+                         ┌─────────────────────┐
+                         │       GitHub        │
+                         │  Source Repository  │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │       Jenkins       │
+                         │     CI/CD Server    │
+                         └──────────┬──────────┘
+                                    │
+                    ┌───────────────┴───────────────┐
+                    │                               │
+                    ▼                               ▼
+          ┌─────────────────┐             ┌─────────────────┐
+          │ Build Docker    │             │ Push Images to  │
+          │ Backend/Frontend│             │    Docker Hub   │
+          └────────┬────────┘             └────────┬────────┘
+                   └──────────────┬────────────────┘
+                                  │ SSH
+                                  ▼
+                       ┌─────────────────────┐
+                       │     AWS EC2         │
+                       │      K3s Cluster    │
+                       └──────────┬──────────┘
+                                  │
+                 ┌────────────────┼────────────────┐
+                 ▼                ▼                ▼
+          ┌────────────┐   ┌────────────┐   ┌────────────┐
+          │  Backend   │   │  Frontend  │   │ PostgreSQL │
+          │    Pod     │   │    Pod     │   │    Pod     │
+          └────────────┘   └────────────┘   └────────────┘
+                                  │
+                                  ▼
+                           ┌────────────┐
+                           │  Traefik   │
+                           │  Ingress   │
+                           └────────────┘
 
----
-
-## Steps Followed
-
-### 1. Created AWS EC2 Instance
-* Opened AWS Management Console -> EC2 Dashboard
-* Launched Ubuntu Linux EC2 instance
-* Configured key pair (`.pem` file) and Security Groups
-
-| Screenshot |
-| :---: |
-| ![AWS EC2 Instance](./screenshots/01-aws-ec2-instance.png) |
-
----
-
-### 2. Connected to EC2 Using SSH
-```bash
-chmod 400 key.pem
-ssh -i key.pem ubuntu@PUBLIC_IP
+             Monitoring / Observability
+                         │
+          ┌──────────────┴──────────────┐
+          ▼                             ▼
+   ┌──────────────┐              ┌──────────────┐
+   │  Prometheus  │─────────────▶│   Grafana    │
+   │ Metrics      │              │ Dashboards   │
+   └──────────────┘              └──────────────┘
 ```
 
-| Screenshot |
-| :---: |
-| ![Ubuntu SSH](./screenshots/02-ubuntu-ssh.png) |
+---
+
+## Technology Stack
+
+| Area | Technologies |
+| :--- | :--- |
+| **Cloud** | AWS EC2, AWS S3, AWS IAM |
+| **OS** | Ubuntu Linux |
+| **Source Control** | Git, GitHub |
+| **CI/CD** | Jenkins |
+| **Containers** | Docker |
+| **Container Registry** | Docker Hub |
+| **Orchestration** | Kubernetes / K3s |
+| **Ingress** | NGINX / Traefik Ingress |
+| **Monitoring** | Prometheus |
+| **Visualization** | Grafana |
+| **Metrics** | Node Exporter, kube-state-metrics, Kubelet/cAdvisor |
+| **Backend** | Node.js / Express |
+| **Frontend** | HTML, CSS, JavaScript / React |
+| **Database** | PostgreSQL |
+| **Automation** | Bash / Declarative Jenkins Pipeline |
+| **Security** | Jenkins Credentials, SSH keys, Kubernetes Secrets |
 
 ---
 
-# Approach 2 — Dockerized Deployment
+## AWS Infrastructure & Compute Provisioning
 
-## Purpose
-Used Docker to containerize application services for isolated and portable execution.
+Provisioned Ubuntu Linux compute instance on AWS EC2, configured Security Groups for remote SSH access, application traffic, and monitoring ports, and verified shell connectivity.
 
----
+### Implementation Screenshots:
 
-## Steps Followed
+| AWS EC2 Instance Management | Ubuntu SSH Connection |
+| :---: | :---: |
+| ![AWS EC2 Instance](./screenshots/01-aws-ec2-instance.png) | ![Ubuntu SSH](./screenshots/02-ubuntu-ssh.png) |
 
-### 1. Installed Docker Engine
-```bash
-sudo apt update -y
-sudo apt install docker.io -y
-sudo systemctl start docker
-sudo systemctl enable docker
-```
-
-### 2. Built & Ran Docker Container
-```bash
-sudo docker build -t task-manager .
-sudo docker run -d -p 8080:80 --name task-container task-manager
-```
-
-| Screenshot |
+| Docker Environment & Status |
 | :---: |
 | ![Docker Status](./screenshots/03-docker.png) |
 
 ---
 
-# Approach 3 — Kubernetes (K3s) Cluster Orchestration
+## CI/CD Pipeline
 
-## Purpose
-Orchestrated multi-tier containerized workloads using K3s Kubernetes cluster on AWS EC2.
+The Jenkins pipeline contains the following stages:
+
+1. **Checkout SCM** -- retrieves source code from GitHub.
+2. **Checkout** -- prepares the workspace.
+3. **Build Backend Image** -- builds the backend Docker image.
+4. **Build Frontend Image** -- builds the frontend Docker image.
+5. **Push Backend Image** -- securely authenticates with Docker Hub and pushes the backend image.
+6. **Push Frontend Image** -- securely authenticates with Docker Hub and pushes the frontend image.
+7. **Deploy to Kubernetes** -- connects to the K3s server over SSH and applies the Kubernetes manifests.
+8. **Verify Deployment** -- verifies backend and frontend rollouts and checks pod status.
+9. **Post Actions** -- reports pipeline success or failure.
+
+### Jenkinsfile Highlights
+
+Docker Hub credentials are handled through Jenkins Credentials rather than hard-coded passwords:
+
+```groovy
+withCredentials([usernamePassword(
+    credentialsId: 'dockerhub-credentials',
+    usernameVariable: 'DOCKER_USERNAME',
+    passwordVariable: 'DOCKER_PASSWORD'
+)]) {
+    // Docker login and push
+}
+```
+
+Kubernetes deployment is performed remotely:
+
+```bash
+ssh -i /var/lib/jenkins/.ssh/taskmanager_key \
+    ubuntu@<KUBERNETES_SERVER_PRIVATE_IP> \
+    "sudo kubectl apply -f /home/ubuntu/Task-Manager-DevSecOps/k8s/"
+```
+
+Deployment verification includes:
+
+```bash
+kubectl rollout status deployment/backend -n taskmanager
+kubectl rollout status deployment/frontend -n taskmanager
+kubectl get pods -n taskmanager
+```
+
+### CI/CD Implementation Screenshots:
+
+| Jenkins Server SSH Host Access | Jenkins Server Dashboard |
+| :---: | :---: |
+| ![Jenkins SSH](./screenshots/13-jenkins-server-ssh.png) | ![Jenkins Server](./screenshots/13.1-jenkins-server.png) |
+
+| Jenkins Global Tool Configuration |
+| :---: |
+| ![Jenkins Tools](./screenshots/13.2-jenkins-server-tools.png) |
+
+| Declarative Jenkinsfile (Part 1 - Stages & Setup) | Declarative Jenkinsfile (Part 2 - Docker & K8s Push) |
+| :---: | :---: |
+| ![Jenkinsfile Part 1](./screenshots/13.3-jenkinsfile-part1.png) | ![Jenkinsfile Part 2](./screenshots/13.3-jenkinsfile-part2.png) |
+
+| Jenkins Pipeline Successful Execution | Jenkins Pipeline Stage View |
+| :---: | :---: |
+| ![Jenkins Pipeline Success](./screenshots/13.4-jenkins-pipeline-success.png) | ![Jenkins Stage View](./screenshots/13.5-jenkins-pipeline-stages.png) |
+
+| Jenkins Console Logs (Build Phase) | Jenkins Console Logs (Deploy Phase) |
+| :---: | :---: |
+| ![Console Output 1](./screenshots/13.6-console-output.png) | ![Console Output 2](./screenshots/13.7-console-output-2.png) |
 
 ---
 
-## Steps Followed
+## Kubernetes Orchestration & Workload Deployment
 
-### 1. Set Up K3s Cluster & Verified Nodes
-* Installed K3s lightweight Kubernetes engine
-* Verified node status using `kubectl get nodes`
+The project uses a single-node K3s cluster on AWS EC2 for the application workload.
 
-| K3s Cluster Status | Kubernetes Node Health |
+### Kubernetes Resources
+
+- Namespace
+- Backend Deployment
+- Frontend Deployment
+- PostgreSQL Deployment
+- Backend Service
+- Frontend Service
+- PostgreSQL Service
+- ConfigMap
+- Secret
+- PersistentVolumeClaim
+- Ingress
+
+Example verification commands:
+
+```bash
+sudo k3s kubectl get nodes
+sudo k3s kubectl get deployments,pods -n taskmanager
+sudo k3s kubectl get svc -n taskmanager
+sudo k3s kubectl get ingress -n taskmanager
+```
+
+### Kubernetes Implementation Screenshots:
+
+| K3s Cluster Engine Status | Kubernetes Node Health (`kubectl get nodes`) |
 | :---: | :---: |
 | ![K3s Running](./screenshots/04-k3s-running.png) | ![Kubernetes Node](./screenshots/05-kubernetes-node.png) |
 
----
-
-### 2. Configured Kubernetes Declarative Manifests
-Created YAML manifests:
-* `namespace.yaml` - Scoped cluster environment
-* `backend-deployment.yaml` - Backend API pods & ClusterIP service
-* `frontend-deployment.yaml` - Frontend web UI pods & service
-* `ingress.yaml` - NGINX Ingress rules for routing
-
-| Manifest Files Overview | Namespace Spec (`namespace.yaml`) |
+| Kubernetes Manifest Files Overview | Namespace Specification (`namespace.yaml`) |
 | :---: | :---: |
 | ![Manifests](./screenshots/05.1-kubernetes-manifests.png) | ![Namespace Spec](./screenshots/05.2-namespace-yaml.png) |
 
-| Backend Deployment YAML | Frontend Deployment YAML |
+| Backend Deployment Manifest (`backend-deployment.yaml`) | Frontend Deployment Manifest (`frontend-deployment.yaml`) |
 | :---: | :---: |
 | ![Backend Deployment](./screenshots/05.3-backend-deployment.yaml.png) | ![Frontend Deployment](./screenshots/05.4-frontend-deployment.yaml.png) |
 
----
-
-### 3. Applied Ingress, Services & Workloads
-```bash
-kubectl apply -f namespace.yaml
-kubectl apply -f backend-deployment.yaml
-kubectl apply -f frontend-deployment.yaml
-kubectl apply -f ingress.yaml
-```
-
-| Ingress Configuration | Services Overview (`kubectl get svc`) |
+| Kubernetes Ingress Config (`ingress.yaml`) | Kubernetes Services Overview (`kubectl get svc`) |
 | :---: | :---: |
 | ![Ingress](./screenshots/06-kubernetes-ingress.png) | ![Services](./screenshots/07-kubernetes-services.png) |
 
@@ -155,20 +226,15 @@ kubectl apply -f ingress.yaml
 
 ---
 
-# Approach 4 — Deployed Task Manager Application
+## Task Manager Application Interface
 
-## Purpose
-Verified end-to-end user features for the deployed Task Manager application stack.
+Screenshots of the deployed Task Manager multi-tier web application running inside the Kubernetes cluster:
 
----
-
-## User Interface & Screenshots
-
-| User Signup Page | User Login Page |
+| User Registration Page | User Login Page |
 | :---: | :---: |
-| ![Signup](./screenshots/09-taskmanager-application-signup-user.png) | ![Login](./screenshots/09-taskmanager-application-login-user.png) |
+| ![User Signup](./screenshots/09-taskmanager-application-signup-user.png) | ![User Login](./screenshots/09-taskmanager-application-login-user.png) |
 
-| User Dashboard (View 1) | User Dashboard & Tasks (View 2) |
+| Task Manager User Dashboard (View 1) | User Dashboard & Task Actions (View 2) |
 | :---: | :---: |
 | ![User Dashboard 1](./screenshots/09-taskmanager-application-userdashboard.png) | ![User Dashboard 2](./screenshots/09-taskmanager-application-userdashboard2.png) |
 
@@ -178,66 +244,40 @@ Verified end-to-end user features for the deployed Task Manager application stac
 
 ---
 
-# Approach 5 — Jenkins CI/CD Automation Pipeline
+## Monitoring & Observability
 
-## Purpose
-Automated code checkout, testing, Docker image creation, and Kubernetes deployment rollout.
+Prometheus collects metrics from the Kubernetes environment and supporting exporters.
 
----
+Monitored components include:
 
-## Steps Followed
+- Kubernetes API Server
+- Kubelet
+- cAdvisor
+- CoreDNS
+- kube-state-metrics
+- Node Exporter
+- Prometheus
+- Alertmanager
+- Grafana
 
-### 1. Configured Jenkins Server & Global Tools
-* Provisioned Jenkins automation server on AWS EC2
-* Configured Global Tool Configuration (JDK, Node.js, Docker, Git)
+Prometheus targets were verified as **UP**.
 
-| Jenkins SSH Access | Jenkins Dashboard |
-| :---: | :---: |
-| ![Jenkins SSH](./screenshots/13-jenkins-server-ssh.png) | ![Jenkins Dashboard](./screenshots/13.1-jenkins-server.png) |
+### Grafana Dashboard
 
-| Jenkins Global Tools Configuration |
-| :---: |
-| ![Jenkins Tools](./screenshots/13.2-jenkins-server-tools.png) |
+A custom Grafana dashboard named **Task Manager DevSecOps Monitoring** provides visibility into:
 
----
+- EC2 CPU usage
+- EC2 memory usage
+- Task Manager pod status
+- Task Manager pod restarts
+- Container memory usage
+- Backend container
+- Frontend container
+- PostgreSQL container
 
-### 2. Created Declarative Jenkinsfile Pipeline
-Authored pipeline stages:
-1. `Checkout` code from GitHub repository
-2. `Build & Test` application code
-3. `Build & Push Docker Image` to registry
-4. `Deploy to Kubernetes Cluster` via `kubectl apply`
+This dashboard helps identify resource usage, pod health, restarts, and container behavior over time.
 
-| Jenkinsfile Code (Part 1) | Jenkinsfile Code (Part 2) |
-| :---: | :---: |
-| ![Jenkinsfile Part 1](./screenshots/13.3-jenkinsfile-part1.png) | ![Jenkinsfile Part 2](./screenshots/13.3-jenkinsfile-part2.png) |
-
----
-
-### 3. Pipeline Execution & Logs
-
-| Pipeline Build Success | Pipeline Stage View |
-| :---: | :---: |
-| ![Pipeline Success](./screenshots/13.4-jenkins-pipeline-success.png) | ![Stage View](./screenshots/13.5-jenkins-pipeline-stages.png) |
-
-| Console Output (Build Phase) | Console Output (Deploy Phase) |
-| :---: | :---: |
-| ![Console Output 1](./screenshots/13.6-console-output.png) | ![Console Output 2](./screenshots/13.7-console-output-2.png) |
-
----
-
-# Approach 6 — Prometheus & Grafana Observability
-
-## Purpose
-Monitored cluster & infrastructure health with Prometheus scrape targets and Grafana dashboards.
-
----
-
-## Steps Followed
-
-### 1. Configured Prometheus Scrape Targets
-* Set up Prometheus expression browser
-* Monitored 5 active scrape targets (Node Exporter, K8s API, Backend, Kubelet, Jenkins)
+### Observability Implementation Screenshots:
 
 | Prometheus Query Interface |
 | :---: |
@@ -251,160 +291,193 @@ Monitored cluster & infrastructure health with Prometheus scrape targets and Gra
 | :---: | :---: |
 | ![Target 3](./screenshots/10.1-prometheus-target3.png) | ![Target 4](./screenshots/10.1-prometheus-target4.png) |
 
-| Target 5: Jenkins Server |
+| Target 5: Jenkins / Host Metrics |
 | :---: |
 | ![Target 5](./screenshots/10.1-prometheus-target5.png) |
 
----
-
-### 2. Configured Grafana Monitoring Dashboards
-* Linked Prometheus data source
-* Visualized CPU/Memory, Pod status, and network metrics
-
-| Grafana Home Portal | Grafana Main Overview |
+| Grafana Welcome Portal | Grafana Main Infrastructure Overview |
 | :---: | :---: |
 | ![Grafana Welcome](./screenshots/11-grafana-welcome-dashboard.png) | ![Grafana Overview](./screenshots/11-grafana-dashboard.png) |
 
-| System Resources Dashboard (CPU/RAM) | Pods & Network Traffic Dashboard |
+| System Resources Dashboard (CPU / RAM) | Pods & Network Traffic Dashboard |
 | :---: | :---: |
 | ![Dashboard 1](./screenshots/12-grafana-monitoring-dashboard-1.png) | ![Dashboard 2](./screenshots/12-grafana-monitoring-dashboard-2.png) |
 
-| Cluster Monitoring Consolidated View |
+| Cluster Monitoring Consolidated Dashboard |
 | :---: |
 | ![Monitoring Dashboard](./screenshots/12.grafana-monitoring-dashboard.png) |
 
 ---
 
-# Docker Commands Used
+## Repository Structure
 
-## Build Docker Image
-```bash
-sudo docker build -t task-manager .
-```
-
-## Run Docker Container
-```bash
-sudo docker run -d -p 8080:80 --name task-container task-manager
-```
-
-## View Running Containers
-```bash
-sudo docker ps
-```
-
-## View Container Logs
-```bash
-sudo docker logs task-container
-```
-
----
-
-# Kubernetes Commands Used
-
-## View Cluster Nodes
-```bash
-kubectl get nodes
-```
-
-## Apply Manifests
-```bash
-kubectl apply -f namespace.yaml
-kubectl apply -f backend-deployment.yaml
-kubectl apply -f frontend-deployment.yaml
-kubectl apply -f ingress.yaml
-```
-
-## View Services
-```bash
-kubectl get svc -n task-namespace
-```
-
-## View Running Pods
-```bash
-kubectl get pods -n task-namespace
+```text
+Task-Manager-DevSecOps/
+│
+├── backend/
+│   ├── Dockerfile
+│   ├── package.json
+│   └── server.js
+│
+├── frontend/
+│   ├── Dockerfile
+│   ├── dashboard.html
+│   ├── index.html
+│   └── signup.html
+│
+├── k8s/
+│   ├── namespace.yaml
+│   ├── backend-deployment.yaml
+│   ├── backend-service.yaml
+│   ├── frontend-deployment.yaml
+│   ├── frontend-service.yaml
+│   ├── postgres-deployment.yaml
+│   ├── postgres-service.yaml
+│   ├── postgres-pvc.yaml
+│   ├── configmap.yaml
+│   ├── secrets.yaml
+│   └── ingress.yaml
+│
+├── screenshots/
+├── docker-compose.yml
+├── Jenkinsfile
+├── README.md
+└── .gitignore
 ```
 
 ---
 
-# Linux Commands Used
+## Running the Application Locally
+
+### Docker Compose
 
 ```bash
-ls -la
-pwd
-cd
-mkdir
-rm -rf
-nano
-chmod 400 key.pem
-ssh -i key.pem ubuntu@PUBLIC_IP
-systemctl status docker
+git clone https://github.com/prajakta372/Task-Manager-DevSecOps.git
+cd Task-Manager-DevSecOps
+
+docker compose up -d --build
+```
+
+Check running containers:
+
+```bash
+docker ps
+```
+
+Stop the application:
+
+```bash
+docker compose down
 ```
 
 ---
 
-# Networking Concepts Used
+## Kubernetes Deployment
 
-* Public IP & Private IP
-* SSH Authentication
-* Port Mapping (`8080:80`)
-* AWS Security Groups (`22`, `80`, `443`, `8080`, `9090`, `3000`, `6443`)
-* Kubernetes Ingress Routing
-* Prometheus Metric Scraping
+After configuring the K3s cluster:
 
----
+```bash
+sudo k3s kubectl apply -f k8s/
+```
 
-# Security Group Configuration
+Check resources:
 
-| Port | Protocol | Purpose |
-| :--- | :--- | :--- |
-| 22 | TCP | SSH Server Access |
-| 80 | TCP | HTTP Web Traffic |
-| 443 | TCP | HTTPS Web Traffic |
-| 8080 | TCP | Jenkins Automation Server |
-| 9090 | TCP | Prometheus Monitoring UI |
-| 3000 | TCP | Grafana Observability UI |
-| 6443 | TCP | Kubernetes API Server |
+```bash
+sudo k3s kubectl get all -n taskmanager
+```
+
+Check ingress:
+
+```bash
+sudo k3s kubectl get ingress -n taskmanager
+```
 
 ---
 
-# Troubleshooting Challenges Faced
+## Security Practices
 
-## 1. SSH Permission Error
-* **Issue:** `Permissions 0644 are too open`
-* **Solution:** Updated key permissions using `chmod 400 key.pem`
+- Docker Hub credentials are stored in **Jenkins Credentials**.
+- SSH authentication uses a dedicated SSH key.
+- Sensitive environment variables are excluded from source control.
+- Kubernetes Secrets are used for sensitive configuration.
+- `.gitignore` is used to prevent accidental secret commits.
+- No passwords or private keys should be committed to GitHub.
 
-## 2. Docker Daemon Permission Issue
-* **Issue:** `Got permission denied while trying to connect to Docker daemon`
-* **Solution:** Added user to docker group using `sudo usermod -aG docker ubuntu`
-
-## 3. Kubernetes Ingress Routing Issue
-* **Issue:** Site not reachable via ingress endpoint
-* **Solution:** Updated host mapping and opened security group ports
-
-## 4. Prometheus Target Down
-* **Issue:** Target scrape metric showing `DOWN` status
-* **Solution:** Checked target service port exposition and updated `prometheus.yml`
+> Before publishing this repository, verify that no `.env` files, private SSH keys, API keys, tokens, or passwords are present in Git history.
 
 ---
 
-# Key Learnings
+## Troubleshooting Experience
 
-* AWS cloud infrastructure provisioning & security group management
-* Docker containerization and image optimization
-* Kubernetes cluster setup (K3s) & declarative manifest deployment
-* Jenkins CI/CD pipeline automation with `Jenkinsfile`
-* Prometheus metric scraping & Grafana dashboard visualization
-* Linux administration, SSH connectivity, and networking fundamentals
+During development, the project involved troubleshooting real DevOps issues including:
+
+- Docker container startup failures
+- Node.js/native dependency compatibility
+- MongoDB connectivity and DNS resolution
+- Jenkins authentication recovery
+- Jenkins-to-Kubernetes SSH connectivity
+- Kubernetes deployment verification
+- Prometheus target health
+- Grafana metric visualization
+
+These troubleshooting steps helped validate the complete deployment and monitoring workflow.
 
 ---
 
-# Author
+## Key DevOps Skills Demonstrated
 
-Prajakta Dnyaneshwar Gavhane  
-*AWS Certified Solutions Architect – Associate*  
-*DevOps & Cloud Engineer*
+- AWS EC2
+- Linux administration
+- Git/GitHub
+- Jenkins CI/CD
+- Jenkinsfile / Declarative Pipeline
+- Docker
+- Docker Hub
+- Kubernetes
+- K3s
+- Kubernetes Services
+- Kubernetes Ingress
+- Kubernetes Secrets and ConfigMaps
+- SSH
+- Prometheus
+- Grafana
+- Node Exporter
+- kube-state-metrics
+- Container monitoring
+- Log and deployment troubleshooting
+- Secure credential management
+
+---
+
+## Future Improvements
+
+Possible next steps:
+
+- Add automated testing to the Jenkins pipeline.
+- Add SonarQube/SonarScanner quality gates.
+- Add Jenkins notifications through email/SNS.
+- Add Kubernetes resource limits and health probes.
+- Add Prometheus alert rules for high CPU/memory and pod failures.
+- Add Grafana alerting.
+- Add Terraform for infrastructure provisioning.
+- Add Ansible for server configuration.
+- Add HTTPS/TLS for the application ingress.
+
+---
+
+## Author
+
+**Prajakta Gavhane**
+
+MCA Graduate | AWS Certified Solutions Architect -- Associate | DevOps / Cloud Engineering
 
 - 🌐 **Live Portfolio:** [prajakta372.github.io/my-aws-devops-portfolio/](https://prajakta372.github.io/my-aws-devops-portfolio/)
-- 🐙 **GitHub:** [@prajakta372](https://github.com/prajakta372)
-- 💼 **LinkedIn:** [Prajakta Gavhane](https://www.linkedin.com/in/prajakta-gavhane-6b145a25a)
+- 🐙 **GitHub Profile:** [@prajakta372](https://github.com/prajakta372)
+- 💼 **LinkedIn Profile:** [Prajakta Gavhane](https://www.linkedin.com/in/prajakta-gavhane-6b145a25a)
 - 📜 **Credly Certification:** [AWS Solutions Architect Badge](https://www.credly.com/badges/fc939891-f9f3-462c-b501-b829cf56cb70)
+
+---
+
+### Project Outcome
+
+This project demonstrates an end-to-end DevOps workflow where application code is automatically built and containerized, images are published to a registry, deployments are performed on Kubernetes through Jenkins, deployment health is verified, and infrastructure/application metrics are monitored through Prometheus and Grafana.
